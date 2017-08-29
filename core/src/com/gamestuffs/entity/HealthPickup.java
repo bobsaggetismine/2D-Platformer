@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.gaestuffs.items.Gun;
+import com.gamestuffs.items.Gun;
 import com.gamestuffs.states.GameState;
 import com.gamestuffs.states.GameStateManager;
 

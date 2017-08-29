@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.gaestuffs.items.Item;
 import com.gamestuffs.Game;
+import com.gamestuffs.items.Item;
 import com.gamestuffs.states.GameState;
 import com.gamestuffs.states.GameStateManager;
 import com.gamestuffs.states.MenuState;
@@ -34,6 +34,7 @@ public class Player extends Entity{
 	public GameStateManager gsm;
 	private float ITEM_DELAY = 1f;
 	private List<Item> inventory;
+	private int itemSelected = 0;
 	float now = 0;
 	private float speed = 2f;
 	public Player(String source,int x, int y,GameStateManager gsm){
@@ -73,9 +74,8 @@ public class Player extends Entity{
 	public void pickup(Item item){
 		sprite = new Sprite(texture,141,1,27,27);
 		inventory.add(item);
+		now = 0;
 	}
-	
-	//inputupdaterender functions
 	private void HandleInput(World map){
 		if (Gdx.input.isTouched() && Game.DEVELOPER_MODE){
 			left.y   +=Gdx.input.getY() - y;
@@ -90,6 +90,7 @@ public class Player extends Entity{
 			x= Gdx.input.getX();
 			y= Gdx.input.getY();
 		}
+		
 		if (map.checkForPlayerColisionLeft(this)){
 			if (vX <0)
 				vX = 0;
@@ -97,6 +98,7 @@ public class Player extends Entity{
 			if (Gdx.input.isKeyPressed(Keys.A))
 				vX = -speed;
 		}
+		
 		if (map.checkForPlayerColisionRight(this)){
 			if (vX >0)
 				vX = 0;
@@ -108,6 +110,7 @@ public class Player extends Entity{
 		if (!map.checkForPlayerColisionTop(this)){
 			if (Gdx.input.isKeyPressed(Keys.SPACE )&& !jumping){
 				vY=jumpHeight;
+				speed++;
 				jumping = true;
 			}
 		}else {
@@ -115,29 +118,51 @@ public class Player extends Entity{
 				vY=0;
 			}
 		}
+		
 		if (!map.checkForPlayerColisionBottom(this)){
 			if (vY>=-2) vY--;
 			
 		}else {
+			if (speed > 2) speed--;
 			jumping = false;
 			if (vY < 0)
 			vY = 0;
+		}
+		try{
+		ITEM_DELAY = inventory.get(itemSelected).useSpeed;
+		}catch(Exception e){
+			now = 0;
+			return;
 		}
 		if (now < ITEM_DELAY)
 		now += Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)){
 			if (inventory.size() > 0)
 				if(now > ITEM_DELAY){
-					inventory.get(0).action(1);
+					try{
+						inventory.get(itemSelected).action(1);
+						}catch(Exception e){
+						}
 					now = 0;
 				}
 		}
 		else if (Gdx.input.isKeyPressed(Keys.LEFT)){
 			if (inventory.size() > 0)
 				if (now > ITEM_DELAY){
-					inventory.get(0).action(-1);
+					try{
+					inventory.get(itemSelected).action(-1);
+					}catch(Exception e){
+					}
 					now = 0;
 				}
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)){ 
+			itemSelected = (itemSelected == 0) ? 1 : 0;
+			try{
+				sprite = inventory.get(itemSelected).getSrite();
+			}catch(Exception e){
+				sprite = new Sprite(texture,57,1,27,27);
+			}
 		}
 		if (now < ITEM_DELAY)
 		now+=Gdx.graphics.getDeltaTime();

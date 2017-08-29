@@ -50,9 +50,14 @@ public class Enemy extends Entity {
 		}
 	}
 	private void checkBounds() {
-		if (y > player.getCamera().position.y + player.getCamera().viewportHeight/2 ||y < player.getCamera().position.y - player.getCamera().viewportHeight/2){
-			kill();
+		try{
+			if (y > player.getCamera().position.y + player.getCamera().viewportHeight/2 ||y < player.getCamera().position.y - player.getCamera().viewportHeight/2){
+				kill();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
+		
 	}
 	public void update(World map){
 		checkBounds();
@@ -143,6 +148,7 @@ public class Enemy extends Entity {
 		batch.draw(sprite,x,y);
 	}
 	public void damage(int damage) {
+		if (damage > health) kill();
 		this.health-=damage;
 	}
 

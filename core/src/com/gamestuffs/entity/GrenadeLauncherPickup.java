@@ -8,14 +8,14 @@ import com.gamestuffs.items.GrenadeLauncher;
 import com.gamestuffs.items.Gun;
 import com.gamestuffs.states.GameState;
 import com.gamestuffs.states.GameStateManager;
-public class GunPickup extends Entity{
+public class GrenadeLauncherPickup extends Entity{
 	private Texture texture;
 	private Sprite sprite;
 	private GameStateManager gsm;
 	private Rectangle bounds;
-	public GunPickup(int x,int y, GameStateManager gsm){
+	public GrenadeLauncherPickup(int x,int y, GameStateManager gsm){
 		texture = new Texture("Textures/download.png");
-		sprite = new Sprite(texture,113,1,27,27);
+		sprite = new Sprite(texture,57,29,27,27);
 		this.x = x;
 		this.y = y;
 		this.gsm =gsm;
@@ -39,7 +39,7 @@ public class GunPickup extends Entity{
 				if (((Player)((GameState)gsm.getState()).entities.get(i)).hitsLeft(bounds) || ((Player)((GameState)gsm.getState()).entities.get(i)).hitsRight(bounds)){
 					dispose();
 					((GameState)gsm.getState()).removeEntity(this);
-					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new Gun(((Player)((GameState)gsm.getState()).entities.get(i)), gsm,10));
+					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new GrenadeLauncher(((Player)((GameState)gsm.getState()).entities.get(i)), gsm));
 				}
 			}
 		}

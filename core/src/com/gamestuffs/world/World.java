@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gamestuffs.entity.Bullet;
 import com.gamestuffs.entity.Enemy;
+import com.gamestuffs.entity.Grenade;
 import com.gamestuffs.entity.Player;
 import com.gamestuffs.states.GameState;
 import com.gamestuffs.states.GameStateManager;
@@ -111,6 +112,16 @@ public class World {
 			for(int j=0;j<width;j++){
 				if (map[i][j] != null && map[i][j].isSolid){
 					if (map[i][j].bounds.overlaps(bullet.getBounds())) return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean checkGrenadeColision(Grenade grenade){
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid){
+					if (map[i][j].bounds.overlaps(grenade.getBounds())) return true;
 				}
 			}
 		}
