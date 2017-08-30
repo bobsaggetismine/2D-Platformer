@@ -37,6 +37,7 @@ public class Enemy extends Entity {
 		top = new Rectangle(x+9,y+16,7,2);
 		health = 50;
 		speed = 1.8f;
+		init();
 	}
 	@Override
 	public void dispose(){

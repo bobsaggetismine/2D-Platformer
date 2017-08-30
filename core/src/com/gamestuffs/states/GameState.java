@@ -11,6 +11,8 @@ import com.gamestuffs.entity.GrenadeLauncherPickup;
 import com.gamestuffs.entity.GunPickup;
 import com.gamestuffs.entity.HealthPickup;
 import com.gamestuffs.entity.Player;
+import com.gamestuffs.levels.Level;
+import com.gamestuffs.levels.Level1;
 import com.gamestuffs.userinterface.HealthBar;
 import com.gamestuffs.world.World;
 
@@ -21,7 +23,7 @@ public class GameState extends State{
 	private GameStateManager gsm;
 	private HealthBar healthBar;
 	private Player player;
-	
+	private Level level;
 	private Random rand;
 	public GameState(GameStateManager gsm){
 		this.gsm = gsm;
@@ -31,12 +33,7 @@ public class GameState extends State{
 		player =new Player("Textures/download.png",750,500,gsm);
 		entities.add(player);
 		healthBar = new HealthBar(player);
-		for (int i =0;i<10;++i){
-			entities.add(new Enemy(rand.nextInt(500),400,this.gsm));
-		}
-		entities.add(new GunPickup(1500,505,this.gsm));
-		entities.add(new HealthPickup(1900,513,this.gsm));
-		entities.add(new GrenadeLauncherPickup(1600,513,this.gsm));
+		level = new Level1(this);
 	}
 	@Override
 	public void render(SpriteBatch batch) {
@@ -51,12 +48,7 @@ public class GameState extends State{
 	public void addEntity(Entity e){
 		entities.add(e);
 	}
-	public void update(float delta) {
-		if (Math.random() > 0.99){
-			entities.add(new Enemy(rand.nextInt(500),400,this.gsm));
-			((Enemy)entities.get(entities.size()-1)).init();
-		}
-		
+	public void update(float delta) {	
 		for (int i = 0; i < entities.size();++i){
 			if (entities.get(i).getId() == 1){
 				((Player)(entities.get(i))).update(map);
@@ -67,13 +59,10 @@ public class GameState extends State{
 				entities.get(i).update();
 			}
 		}
+		level.update();
 	}
 	public void init(){
-		for (int i = 0; i < entities.size();i++){
-			if (entities.get(i).getId() == 3){
-				((Enemy)entities.get(i)).init();
-			}
-		}
+		level.init();
 	}
 	public void clearEntities(){
 		for (Entity e: entities){
@@ -87,5 +76,8 @@ public class GameState extends State{
 	}
 	public Player getPlayer(){
 		return player;
+	}
+	public GameStateManager getGsm(){
+		return gsm;
 	}
 }

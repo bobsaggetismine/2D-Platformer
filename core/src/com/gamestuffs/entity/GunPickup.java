@@ -39,7 +39,7 @@ public class GunPickup extends Entity{
 				if (((Player)((GameState)gsm.getState()).entities.get(i)).hitsLeft(bounds) || ((Player)((GameState)gsm.getState()).entities.get(i)).hitsRight(bounds)){
 					dispose();
 					((GameState)gsm.getState()).removeEntity(this);
-					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new Gun(((Player)((GameState)gsm.getState()).entities.get(i)), gsm,10));
+					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new Gun(((Player)((GameState)gsm.getState()).entities.get(i)), gsm,20));
 				}
 			}
 		}

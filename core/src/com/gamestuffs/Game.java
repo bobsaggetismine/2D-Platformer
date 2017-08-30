@@ -27,8 +27,6 @@ public class Game extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
 	}
-
-	
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
@@ -36,10 +34,7 @@ public class Game extends ApplicationAdapter {
 		gsm.render(batch);
 		Gdx.graphics.setTitle("FPS: "+Gdx.graphics.getFramesPerSecond()+" Rendered with: "+Gdx.gl.glGetString(GL30.GL_RENDERER));
 	}
-	
-	
 	public void dispose () {
-		
 		batch.dispose();
 	}
 }

@@ -16,14 +16,13 @@ public class Grenade extends Entity{
 	private Sprite sprite;
 	private GameStateManager gsm;
 	
-	
 	public Grenade(float x, float y,int dir,GameStateManager gsm){
 		this.gsm = gsm;
 		super.x = x;
 		super.y = y;
 		bounds = new Rectangle(x+9,y+12,4,3);
 		texture = new Texture(Gdx.files.internal("Textures/download.png"));
-		sprite = new Sprite(texture,86,1,26,26);
+		sprite = new Sprite(texture,86,29,26,26);
 		xVel = Bullet.DEFAULT_BULLET_SPEED*dir;
 	}
 	public void update(){

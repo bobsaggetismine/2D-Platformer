@@ -18,7 +18,7 @@ public class Gun extends Item{
 	private Sprite sprite;
 	
 	public Gun(Player player,GameStateManager gsm,int damage){
-		useSpeed = 1f;
+		useSpeed = 0.35f;
 		this.owner = player;
 		this.damage = damage;
 		this.gsm =gsm;
