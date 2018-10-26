@@ -8,5 +8,5 @@ public abstract class Item {
 	public abstract void action(int modifier);
 	public abstract void dispose();
 	public abstract Sprite getSrite();
-	
+	public int ammo;
 }

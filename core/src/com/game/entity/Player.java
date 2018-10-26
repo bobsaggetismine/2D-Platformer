@@ -51,7 +51,10 @@ public class Player extends Entity{
 		full = new Rectangle(x+7,y,9,16);
 		top = new Rectangle(x+9,y+16,7,2);
 		inventory = new ArrayList<Item>();
-		
+	}
+	public List<Item> getInventory()
+	{
+		return inventory;
 	}
 	public void damage(int dmg){
 		this.health-=dmg;
@@ -77,6 +80,7 @@ public class Player extends Entity{
 		now = 0;
 	}
 	private void HandleInput(World map){
+		
 		if (Gdx.input.isTouched() && Game.DEVELOPER_MODE){
 			left.y   +=Gdx.input.getY() - y;
 			bottom.y +=Gdx.input.getY() - y;
@@ -118,7 +122,21 @@ public class Player extends Entity{
 				vY=0;
 			}
 		}
-		
+		if (Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)){
+			if ( itemSelected >= inventory.size()-1 )
+			{
+				itemSelected = 0;
+			}
+			else
+			{
+				itemSelected++;
+			}
+			try{
+				sprite = inventory.get(itemSelected).getSrite();
+			}catch(Exception e){
+				sprite = new Sprite(texture,57,1,27,27);
+			}
+		}
 		if (!map.checkForPlayerColisionBottom(this)){
 			if (vY>=-2) vY--;
 			
@@ -136,6 +154,8 @@ public class Player extends Entity{
 		}
 		if (now < ITEM_DELAY)
 		now += Gdx.graphics.getDeltaTime();
+		
+		
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)){
 			if (inventory.size() > 0)
 				if(now > ITEM_DELAY){
@@ -154,14 +174,8 @@ public class Player extends Entity{
 					now = 0;
 				}
 		}
-		if (Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)){ 
-			itemSelected = (itemSelected == 0) ? 1 : 0;
-			try{
-				sprite = inventory.get(itemSelected).getSrite();
-			}catch(Exception e){
-				sprite = new Sprite(texture,57,1,27,27);
-			}
-		}
+		
+		
 		if (now < ITEM_DELAY)
 		now+=Gdx.graphics.getDeltaTime();
 	}
@@ -237,5 +251,9 @@ public class Player extends Entity{
 	}
 	public OrthographicCamera getCamera(){
 		return camera;
+	}
+	public void giveAmmo(int i) {
+		if(inventory.get(itemSelected).ammo < 2000000000)
+		inventory.get(itemSelected).ammo += i;
 	}
 }

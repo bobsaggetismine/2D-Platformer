@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.engine.Game;
 import com.game.entity.Bullet;
 import com.game.entity.Player;
+import com.game.entity.SlowSpell;
 import com.game.states.GameState;
 import com.game.states.GameStateManager;
 
-public class Gun extends Item{
+public class Wand extends Item{
 	public int damage;
 	private Music pistolShot;
 	private GameStateManager gsm;
@@ -18,22 +19,22 @@ public class Gun extends Item{
 	private Texture texture;
 	private Sprite sprite;
 	
-	public Gun(Player player,GameStateManager gsm,int damage){
-		ammo = Integer.MAX_VALUE;
-		useSpeed = 0.7f;
+	public Wand(Player player,GameStateManager gsm,int damage){
+		ammo = 75;
+		useSpeed = 0.4f;
 		this.owner = player;
 		this.damage = damage;
 		this.gsm =gsm;
 		pistolShot = Gdx.audio.newMusic(Gdx.files.internal("Sounds/pistol.mp3"));
 		texture = new Texture(Gdx.files.internal("Textures/download.png"));
-		sprite = new Sprite(texture,141,1,27,27);
+		sprite = new Sprite(texture,113,57,27,27);
 	}
 	public void action(int dir) {
 		if(ammo >= 1 && ((GameState)gsm.getState()).entities.size() < Game.MAX_ENTITIES)
 		{
 			pistolShot.stop();
 			pistolShot.play();
-			((GameState)gsm.getState()).addEntity(new Bullet(owner.getX(),owner.getY(),dir,this.gsm,this.damage));
+			((GameState)gsm.getState()).addEntity(new SlowSpell(owner.getX(),owner.getY(),dir,this.gsm,this.damage));
 			pistolShot.setVolume(0.001f);
 			ammo--;
 		}

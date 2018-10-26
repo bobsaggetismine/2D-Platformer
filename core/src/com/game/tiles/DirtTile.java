@@ -8,10 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class DirtTile extends Tile{
 	
-	private Texture texture;
-	private Sprite sprite;
-	
-	
 	public DirtTile(String source, int x, int y) {
 		texture = new Texture(Gdx.files.internal(source));
 		sprite = new Sprite(texture,1,1,27,27);

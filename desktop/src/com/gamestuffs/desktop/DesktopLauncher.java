@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Brodie's 2D platformer";
-		config.useGL30 = true;
+		config.useGL30 = false;
 		config.resizable = false;
 		config.backgroundFPS = 10;
 		config.foregroundFPS = 120;

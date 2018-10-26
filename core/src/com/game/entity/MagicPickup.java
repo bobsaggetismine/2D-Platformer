@@ -5,16 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.items.Gun;
+import com.game.items.Wand;
 import com.game.states.GameState;
 import com.game.states.GameStateManager;
-public class GunPickup extends Entity{
+public class MagicPickup extends Entity{
 	private Texture texture;
 	private Sprite sprite;
 	private GameStateManager gsm;
 	private Rectangle bounds;
-	public GunPickup(int x,int y, GameStateManager gsm){
+	public MagicPickup(int x,int y, GameStateManager gsm){
 		texture = new Texture("Textures/download.png");
-		sprite = new Sprite(texture,113,1,27,27);
+		sprite =  new Sprite(texture,113,29,27,27);
 		this.x = x;
 		this.y = y;
 		this.gsm =gsm;
@@ -38,7 +39,7 @@ public class GunPickup extends Entity{
 				if (((Player)((GameState)gsm.getState()).entities.get(i)).hitsLeft(bounds) || ((Player)((GameState)gsm.getState()).entities.get(i)).hitsRight(bounds)){
 					dispose();
 					((GameState)gsm.getState()).removeEntity(this);
-					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new Gun(((Player)((GameState)gsm.getState()).entities.get(i)), gsm,50));
+					((Player)((GameState)gsm.getState()).entities.get(i)).pickup(new Wand(((Player)((GameState)gsm.getState()).entities.get(i)), gsm,100));
 				}
 			}
 		}

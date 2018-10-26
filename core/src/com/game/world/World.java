@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.entity.Bullet;
 import com.game.entity.Enemy;
 import com.game.entity.Grenade;
+import com.game.entity.LargeZombie;
 import com.game.entity.Player;
+import com.game.entity.SlowSpell;
 import com.game.states.GameState;
 import com.game.states.GameStateManager;
 import com.game.tiles.DirtTile;
 import com.game.tiles.Tile;
 import com.game.tiles.WaterTile;
+import com.game.tiles.WoodTile;
 
 public class World {
 	Tile[][] map;
@@ -42,6 +45,8 @@ public class World {
 					map[i][j] = new DirtTile("Textures/download.png",j*SCALE,i*SCALE);
 				}else if (holder == 2){
 					map[i][j] = new WaterTile("Textures/download.png",j*SCALE,i*SCALE);
+				}else if (holder == 3){
+					map[i][j] = new WoodTile("Textures/download.png",j*SCALE,i*SCALE);
 				}
 			}	
 		}
@@ -165,5 +170,55 @@ public class World {
 				}
 			}
 		}
+	}
+	public boolean checkBulletColision(SlowSpell slowSpell) {
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid){
+					if (map[i][j].bounds.overlaps(slowSpell.getBounds())) return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean checkForPlayerColisionBottom(LargeZombie enemy){
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid)
+				if (enemy.hitsBotom(map[i][j].bounds)) return true;
+			}
+		}
+		return false;
+			
+	}
+	public boolean checkForPlayerColisionTop(LargeZombie enemy){
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid)
+				if (enemy.hitsTop(map[i][j].bounds)) return true;
+			}
+		}
+		return false;
+			
+	}
+	public boolean checkForPlayerColisionRight(LargeZombie enemy){
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid)
+				if (enemy.hitsRight(map[i][j].bounds)) return true;
+			}
+		}
+		return false;
+			
+	}
+	public boolean checkForPlayerColisionLeft(LargeZombie enemy){
+		for (int i=0;i<height;i++){
+			for(int j=0;j<width;j++){
+				if (map[i][j] != null && map[i][j].isSolid)
+				if (enemy.hitsLeft(map[i][j].bounds)) return true;
+			}
+		}
+		return false;
+			
 	}
 }

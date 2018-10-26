@@ -9,7 +9,7 @@ import com.game.states.GameState;
 import com.game.states.GameStateManager;
 import com.game.world.World;
 
-public class Enemy extends Entity {
+public class LargeZombie extends Entity {
 	
 	private Texture texture;
 	private Sprite sprite;
@@ -21,7 +21,7 @@ public class Enemy extends Entity {
 	private int health;
 	private float speed;
 	private float now=0,hitTimer=0.5f;
-	public Enemy(int x, int y,GameStateManager gsm){
+	public LargeZombie(int x, int y,GameStateManager gsm){
 		this.gsm = gsm;
 		super.x = x;
 		super.y = y;
@@ -29,14 +29,14 @@ public class Enemy extends Entity {
 		yVel = -3;
 		xVel = 0;
 		texture = new Texture("Textures/download.png");
-		sprite = new Sprite(texture,169,1,27,27);
+		sprite = new Sprite(texture,1,57,27,27);
 		left = new Rectangle(x+7,y+3,2,16);
 		right = new Rectangle(x+16,y+3,2,16);
 		bottom = new Rectangle(x+11,y,4,2);
 		full = new Rectangle(x+7,y,9,16);
 		top = new Rectangle(x+9,y+16,7,2);
-		health = 100;
-		speed = 1.8f;
+		health = 400;
+		speed = 0.9f;
 		init();
 	}
 	@Override
@@ -74,11 +74,11 @@ public class Enemy extends Entity {
 			kill();
 		}
 		if (player.x > x){
-			sprite = new Sprite(texture,169,1,27,27);
+			//sprite = new Sprite(texture,169,1,27,27);
 			xVel = speed;
 		}else if (player.x < x){
 			xVel = -speed;
-			sprite = new Sprite(texture,197,1,27,27);
+			//sprite = new Sprite(texture,197,1,27,27);
 		}else{
 			xVel = 0;
 		}
@@ -133,7 +133,8 @@ public class Enemy extends Entity {
 		if (r.overlaps(top)) return true;
 		return false;
 	}
-	public void move(){
+	public void move()
+	{
 		left.y +=yVel;
 		bottom.y += yVel;
 		top.y+=yVel;
@@ -147,11 +148,13 @@ public class Enemy extends Entity {
 		y+=yVel;
 		x+=xVel;
 	}
-	public void kill(){
+	public void kill()
+	{
 		((GameState)gsm.getState()).removeEntity(this);
 	}
-	public int getId() {
-		return 3;
+	public int getId()
+	{
+		return 9;
 	}
 	public void render(SpriteBatch batch) {
 		batch.draw(sprite,x,y);
@@ -159,13 +162,15 @@ public class Enemy extends Entity {
 	public void damage(int damage) {
 		if (damage > health)
 		{
-			if(Math.random() > 0.9)
+			if(Math.random() > 0.5)
 				((GameState)gsm.getState()).entities.add(new AmmoPickup((int)this.x,(int)this.y+3,((GameState)gsm.getState()).getGsm()));
 			kill();
 		}
 		this.health-=damage;
 	}
-	public void slow() {
+	public void slow()
+	{
+		if(this.speed <= .4f) return;
 		this.speed -= 0.3f;
 	}
 
